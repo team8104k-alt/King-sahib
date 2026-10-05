@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEAM 810 | WhatsApp Bot</title>
+<style>
+:root{color-scheme:dark;--line:#1c3c2b;--green:#20e38b;--muted:#9db7a8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#103b27 0,#07110d 55%);font-family:Tahoma,Arial,sans-serif;color:#f2fff7;min-height:100vh;display:grid;place-items:center;padding:22px}.wrap{width:min(100%,520px)}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:54px;height:54px;border-radius:17px;background:linear-gradient(135deg,#20e38b,#087a4b);display:grid;place-items:center;color:#03170d;font-size:23px;font-weight:900;box-shadow:0 0 32px #20e38b30}.brand h1{font-size:22px;margin:0;letter-spacing:1px}.brand p{margin:5px 0 0;color:var(--muted);font-size:13px}.card{background:#0c1913ef;border:1px solid var(--line);border-radius:23px;padding:24px;box-shadow:0 24px 70px #0008}.tag{color:var(--green);font-size:11px;font-weight:800;letter-spacing:1.5px}.card h2{margin:8px 0;font-size:25px}.desc{color:var(--muted);font-size:14px;line-height:1.9;margin-bottom:18px}label{display:block;font-size:13px;color:#c8ded1;margin:14px 0 7px}input{width:100%;border:1px solid #254b36;border-radius:12px;background:#06100b;color:white;padding:14px;font-size:15px;outline:none}input:focus{border-color:var(--green)}button{border:0;border-radius:12px;padding:14px 16px;width:100%;background:var(--green);color:#03170d;font-weight:900;font-size:15px;cursor:pointer;margin-top:16px}button:disabled{opacity:.5;cursor:wait}.status{margin-top:18px;border:1px solid var(--line);background:#07120c;border-radius:14px;padding:14px;font-size:13px;color:var(--muted);line-height:1.8;overflow-wrap:anywhere}.warning{font-size:12px;color:#a9c4b4;margin-top:15px;line-height:1.9}.foot{text-align:center;color:#668474;font-size:12px;margin:16px 0}a{color:var(--green)}
+</style></head>
+<body><main class="wrap"><header class="brand"><div class="logo">810</div><div><h1>TEAM 810</h1><p>WhatsApp Bot Control Panel</p></div></header>
+<section class="card"><div class="tag">TEAM 810 • ثبت‌نام</div><h2>خوش آمدی!</h2><div class="desc">برای ثبت‌نام، نام، ایمیل و شماره واتساپ خودت را وارد کن. این فرم رمز پنل نمی‌خواهد.</div>
+<form id="register"><label for="name">نام</label><input id="name" name="name" autocomplete="name" maxlength="80" placeholder="نام یا اسم دلخواه" required>
+<label for="email">ایمیل</label><input id="email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="name@example.com" required>
+<label for="phone">شماره واتساپ</label><input id="phone" name="phone" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="کود کشور + شماره" required>
+<button id="submit" type="submit">ثبت اطلاعات</button></form>
+<div class="status" id="status" role="status">وضعیت: منتظر ثبت‌نام.</div>
+<div class="warning">برای امنیت حساب، این سایت کد جفت‌سازی یا کد تأیید واتساپ را نمی‌گیرد و نمایش نمی‌دهد. شماره و ایمیل را فقط وقتی وارد کن که با ذخیره‌شدن آن‌ها در سرور موافق باشی.</div></section><div class="foot">TEAM 810 • WhatsApp Bot</div></main>
+<script>
+const form=document.querySelector('#register'),statusBox=document.querySelector('#status'),btn=document.querySelector('#submit');
+form.addEventListener('submit',async e=>{e.preventDefault();btn.disabled=true;statusBox.textContent='در حال ثبت اطلاعات…';try{const payload={name:document.querySelector('#name').value,email:document.querySelector('#email').value,phone:document.querySelector('#phone').value};const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const d=await r.json().catch(()=>({error:'پاسخ سرور قابل خواندن نیست.'}));if(!r.ok)throw new Error(d.error||'ثبت‌نام انجام نشد.');statusBox.textContent=d.message||'ثبت‌نام انجام شد.';form.reset()}catch(err){statusBox.textContent=err.message}finally{btn.disabled=false}});
+</script></body></html>
